@@ -2,11 +2,16 @@ package file_handling.manager;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
+
+
 
 public class FileManager {
 
@@ -127,6 +132,48 @@ public class FileManager {
 				ConsoleManager.getInstance().printToConsole(Character.toString(data), false);
 			}
 			ConsoleManager.getInstance().consoleLineBreak();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void copyTxtFile(String name) {
+		File fileToRead = new File(currentPath + name);
+		
+		List<String> fullName = new ArrayList<>(Arrays.asList(name.split(Pattern.quote("."))));
+		
+		 String newfullName = fullName.get(0).concat("_bis");
+		 fullName.remove(0);
+		 fullName.add(0, newfullName);
+		
+		String newName = String.join(".", fullName);
+		
+		
+		
+		File file = new File(currentPath + newName);
+		
+		try(FileInputStream fis = new FileInputStream(fileToRead); 
+				FileOutputStream fos = new FileOutputStream(file);
+			){
+			
+			if(!file.exists()) {
+				file.createNewFile();
+			}
+			
+			
+			int data = 0;
+			
+			Date start = new Date();
+            while((data = fis.read()) >= 0) {
+                fos.write(data);
+            }
+
+            fos.flush();
+            
+            Date end = new Date();
+			
+            
+            
 		}catch(IOException e){
 			e.printStackTrace();
 		}
