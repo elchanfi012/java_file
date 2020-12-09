@@ -60,6 +60,10 @@ public class FileService {
         if (action.equalsIgnoreCase(UserActions.BACK_FOLDER.getValue())) {
         	back();
         }
+        
+        if (action.equalsIgnoreCase(UserActions.READ_TXT_FILE.getValue())) {
+        	readFile();
+        }
     }
 
     /**
@@ -84,6 +88,7 @@ public class FileService {
             ConsoleManager.getInstance().printToConsole("5 - Delete a file", true);
             ConsoleManager.getInstance().printToConsole("6 - Go into folder", true);
             ConsoleManager.getInstance().printToConsole("7 - Move back one folder", true);
+            ConsoleManager.getInstance().printToConsole("8 - Read a txt file", true);
             ConsoleManager.getInstance().printToConsole(UserActions.EXIT.getValue() + " - Exit", true);
 
             // ask user answer
@@ -201,6 +206,22 @@ public class FileService {
 	private void editFile() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	private void readFile() {
+		printActionTitle("File read");
+
+        // list files for user to choose
+        int nbFiles = listFiles();
+
+        int answer;
+
+        do {
+            ConsoleManager.getInstance().printToConsole("Which file do you want to read ? ", true);
+            answer = ConsoleManager.getInstance().readUserInputInteger();
+        } while(answer < 0 || answer >= nbFiles);
+
+        fileManager.readTxtFile(fileManager.listFiles().get(answer).getName());
 	}
 
     private void printApplicationTitle() {

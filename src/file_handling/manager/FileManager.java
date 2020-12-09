@@ -1,6 +1,7 @@
 package file_handling.manager;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -93,7 +94,7 @@ public class FileManager {
 	
 			currentPath = String.join("\\", paths);
 	
-			
+			currentPath += "\\";
 		}
 		
 		if (currentPath.isEmpty() || currentPath.equals("D:")) {
@@ -115,6 +116,20 @@ public class FileManager {
 	 */
 	public String getCurrentPath() {
 		return currentPath;
+	}
+	
+	public void readTxtFile(String name) {
+		File fileToRead = new File(currentPath + name);
+		
+		try(FileInputStream fis = new FileInputStream(fileToRead)){
+			int data;
+			while((data = fis.read()) >= 0) {
+				ConsoleManager.getInstance().printToConsole(Character.toString(data), false);
+			}
+			ConsoleManager.getInstance().consoleLineBreak();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 }
