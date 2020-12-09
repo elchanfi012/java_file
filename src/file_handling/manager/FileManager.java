@@ -13,7 +13,7 @@ public class FileManager {
 	private StringBuilder sb;
 
 	public FileManager() {
-		currentPath = "\\test\\";
+		currentPath = "D:\\Documents\\CDA\\";
 		this.sb = new StringBuilder();
 	}
 
@@ -86,14 +86,18 @@ public class FileManager {
 
 		List<String> paths = Arrays.asList(currentPath.split(Pattern.quote("\\")));
 
-		paths.remove(paths.size() - 1);
+		
+		if(paths.size() > 0) {
 
-		//paths = paths.subList(0, paths.size() - 1);
-
-		currentPath = String.join("\\", paths);
-
-		if (currentPath.isEmpty()) {
-			currentPath = "\\";
+			paths = paths.subList(0, paths.size() - 1);
+	
+			currentPath = String.join("\\", paths);
+	
+			
+		}
+		
+		if (currentPath.isEmpty() || currentPath.equals("D:")) {
+			currentPath = "D:\\";
 		}
 	}
 
