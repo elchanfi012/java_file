@@ -4,6 +4,7 @@ import file_handling.manager.ConsoleManager;
 import file_handling.manager.FileManager;
 
 import java.io.File;
+import java.util.Date;
 
 import org.w3c.dom.UserDataHandler;
 
@@ -70,6 +71,10 @@ public class FileService {
         if (action.equalsIgnoreCase(UserActions.COPY_TXT_FILE.getValue())) {
         	copyFile();
         }
+        
+        if (action.equalsIgnoreCase(UserActions.COPY_FILE_BENCHMARK.getValue())) {
+        	copyBenchmark();
+        }
     }
 
     /**
@@ -96,6 +101,7 @@ public class FileService {
             ConsoleManager.getInstance().printToConsole(UserActions.BACK_FOLDER.getValue() + " - Move back one folder", true);
             ConsoleManager.getInstance().printToConsole(UserActions.READ_TXT_FILE.getValue() + " - Read a txt file", true);
             ConsoleManager.getInstance().printToConsole(UserActions.COPY_TXT_FILE.getValue() + " - Copy a txt file", true);
+            ConsoleManager.getInstance().printToConsole(UserActions.COPY_FILE_BENCHMARK.getValue() + " - Copy a txt file", true);
             ConsoleManager.getInstance().printToConsole(UserActions.EXIT.getValue() + " - Exit", true);
 
             // ask user answer
@@ -234,17 +240,42 @@ public class FileService {
 	private void copyFile() {
 		printActionTitle("File copy");
 
-        // list files for user to choose
+		 // list files for user to choose
+        Date start, end = new Date();
+        int answer;   
+        
+        
         int nbFiles = listFiles();
-
-        int answer;
-
-        do {
+        
+    	do {
             ConsoleManager.getInstance().printToConsole("Which file do you want to copy ? ", true);
             answer = ConsoleManager.getInstance().readUserInputInteger();
         } while(answer < 0 || answer >= nbFiles);
-
+    	start = new Date();
         fileManager.copyTxtFile(fileManager.listFiles().get(answer).getName());
+        end = new Date();
+        }
+	
+	
+	private void copyBenchmark() {
+		printActionTitle("File copy");
+
+        // list files for user to choose
+       
+        int answer;   
+        
+        
+        int nbFiles = listFiles();
+        
+    	do {
+            ConsoleManager.getInstance().printToConsole("Which file do you want to copy ? ", true);
+            answer = ConsoleManager.getInstance().readUserInputInteger();
+        } while(answer < 0 || answer >= nbFiles);
+    	
+        fileManager.copyTxtFile(fileManager.listFiles().get(answer).getName());
+       
+       
+        
 	}
 
     private void printApplicationTitle() {

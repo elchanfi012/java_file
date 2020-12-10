@@ -11,7 +11,8 @@ public enum UserActions {
     BACK_FOLDER("7"),
     READ_TXT_FILE("8"),
     COPY_TXT_FILE("9"),
-    EXIT("10");
+    COPY_FILE_BENCHMARK("10"),
+    EXIT("11");
 
     private String value;
 

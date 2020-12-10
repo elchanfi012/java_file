@@ -1,5 +1,7 @@
 package file_handling.manager;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -163,15 +165,57 @@ public class FileManager {
 			
 			int data = 0;
 			
-			Date start = new Date();
+			
             while((data = fis.read()) >= 0) {
                 fos.write(data);
             }
 
             fos.flush();
             
-            Date end = new Date();
+           
 			
+            
+            
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void copyTxtFileWithBuffer(String name) {
+		File fileToRead = new File(currentPath + name);
+		
+		List<String> fullName = new ArrayList<>(Arrays.asList(name.split(Pattern.quote("."))));
+		
+		 String newfullName = fullName.get(0).concat("_buffer_bis");
+		 fullName.remove(0);
+		 fullName.add(0, newfullName);
+		
+		String newName = String.join(".", fullName);
+		
+		
+		
+		File file = new File(currentPath + newName);
+		
+		try(FileInputStream fis = new FileInputStream(fileToRead); 
+			FileOutputStream fos = new FileOutputStream(file);
+			BufferedInputStream bis = new BufferedInputStream(fis);
+			BufferedOutputStream bos = new BufferedOutputStream(fos);
+			){
+			
+			if(!file.exists()) {
+				file.createNewFile();
+			}
+			
+			
+			int data = 0;
+			
+			
+            while((data = bis.read()) >= 0) {
+                bos.write(data);
+            }
+
+            bos.flush();
+            
             
             
 		}catch(IOException e){
